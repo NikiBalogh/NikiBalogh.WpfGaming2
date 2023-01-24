@@ -40,6 +40,7 @@ namespace WpfFoodie
         TimeSpan DropSpeed = new TimeSpan(10000);
         DispatcherTimer timer = new DispatcherTimer();
         DispatcherTimer timer2 = new DispatcherTimer();
+        //InitializeComponent(), sets eventhandler and interval for timers and starts the timers
         public MainWindow()
         {
             InitializeComponent();
@@ -50,13 +51,15 @@ namespace WpfFoodie
             timer2.Interval = DropSpeed;
             timer2.Start();
         }
-
+        //Timer_Tick() creates food and adds it to the foodList and then adds the ellipse (Circle)
+        //to GameGrid.Children 
         private void Timer_Tick(object sender, EventArgs e)
         {
             Food food = new Food();
             foodList.Add(food);
             GameGrid.Children.Add(food.Circle);
         }
+        //Timer2_Tick() adds dropAmount to foodY and moves the ellipse (Circle) down the value of foodY using margin then runs CheckIfScoring()
         private void Timer2_Tick(object sender, EventArgs e)
         {
             foreach (Food food in foodList)
@@ -64,8 +67,10 @@ namespace WpfFoodie
                 food.FoodY += dropAmount;
                 food.Circle.Margin = new Thickness(food.FoodX, food.FoodY, 0, 0);
             }
-            Scoring();
+            CheckIfScoring();
         }
+        //Check what button the user presses and saves it in the direction variable
+        //and then runs Move()
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -82,6 +87,7 @@ namespace WpfFoodie
             }
             Move();
         }
+        //Moves the recPlayer using margin based on the direction variable which is based on what the user presses check Window_KeyDown()
         private void Move()
         {
             if (direction == 0)
@@ -95,7 +101,16 @@ namespace WpfFoodie
                 recPlayer.Margin = new Thickness(playerX, 403, 0, 0);
             }
         }
-        private void Scoring()
+        //Runs a loop that checks the height of recPlayer
+        //Checks if foodlist is empty;
+        //Runs a loop that checks the width of recPlayer
+        //Runs Scoring() if playerX (width) is the same as first item's foodX on foodList
+        //and if playerY (height) is the same as first item's foodY on foodList
+        //If it is runs Scoring()
+        //Then checks if the first item on foodList's FoodY is under 413 if it is
+        //it runs RemoveFood and then ResetScore()
+        //If not it does nothing
+        private void CheckIfScoring()
         {
             for (int j = -10; j < 10; j++)
             {
@@ -114,34 +129,24 @@ namespace WpfFoodie
                         }
                         else if (playerX + i == foodList[0].FoodX && foodList[0].FoodY == 403 + j)
                         {
-                            countTillScale++;
-                            score++;
-                            lblScore.Content = score;
-                            if (score > highscore)
-                            {
-                                highscore = score;
-                                lblHighscore.Content = $"Highscore: {highscore}";
-                            }
-                            //Change index under here to number of elements on screen + 1
-                            GameGrid.Children.RemoveAt(3);
-                            foodList.RemoveAt(0);
-                            Scaling();
+                            Scoring();
                         }
                     }
                     if (foodList.Count == 0)
                     {
 
                     }
-                    else if (foodList[0].FoodY == 403 + j)
+                    else if (foodList[0].FoodY > 413)
                     {
-                        //Change index under here to number of elements on screen + 1
-                        GameGrid.Children.RemoveAt(3);
-                        foodList.RemoveAt(0);
+                        RemoveFood();
                         ResetScore();
                     }
                 }
             }
         }
+        //Scales if countTillScale equals WhenToScale
+        //resets countTillScale
+        //Adds 10 to WhenToScale to increase the next time it scales (Increase Game Time)
         private void Scaling()
         {
             if (countTillScale == WhenToScale)
@@ -157,6 +162,7 @@ namespace WpfFoodie
                 }
             }
         }
+        //Resets almost everything to start values
         private void ResetScore()
         {
             countTillScale = 0;
@@ -167,6 +173,32 @@ namespace WpfFoodie
             timer.Interval = SpawnSpeed;
             score = 0;
             lblScore.Content = score;
+        }
+        //Increases countTillScale and score by 1
+        //Saves score in score label
+        //Checks if score is higher than highscore if it is update highscore and its label
+        //Removes food using RemoveFood()
+        //Runs Scaling()
+        private void Scoring()
+        {
+            countTillScale++;
+            score++;
+            lblScore.Content = score;
+            if (score > highscore)
+            {
+                highscore = score;
+                lblHighscore.Content = $"Highscore: {highscore}";
+            }
+            RemoveFood();
+            Scaling();
+        }
+        //Removes the first food ellipse (Circle) from GameGrid using its index
+        //Removes first food item in foodList
+        private void RemoveFood()
+        {
+            //Change index under here to number of elements on screen + 1
+            GameGrid.Children.RemoveAt(3);
+            foodList.RemoveAt(0);
         }
     }
 }
