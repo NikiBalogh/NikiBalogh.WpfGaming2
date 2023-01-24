@@ -10,6 +10,7 @@
     <Grid x:Name="GameGrid">
         <Rectangle x:Name="recPlayer" HorizontalAlignment="Center" Height="10" Margin="0,403,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Fill="#FF7A7777"/>
         <Label x:Name="lblScore" Content="0" HorizontalAlignment="Center" Margin="0,25,0,0" VerticalAlignment="Top" FontSize="25"/>
+        <Label x:Name="lblHighscore" Content="Highscore: 0" HorizontalAlignment="Left" Margin="35,25,0,0" VerticalAlignment="Top" FontSize="25"/>
 
     </Grid>
 </Window>

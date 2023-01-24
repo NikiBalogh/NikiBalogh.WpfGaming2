@@ -1,9 +1,0 @@
-﻿<Application x:Class="NikiBalogh.WpfGaming2.Foodie.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:NikiBalogh.WpfGaming2.Foodie"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
-</Application>

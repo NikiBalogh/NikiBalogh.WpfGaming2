@@ -30,6 +30,7 @@ namespace WpfFoodie
         int WhenToScale = 10;
         int countTillScale = 0;
         int DifficultyLevel = 0;
+        int highscore = 0;
         List<Food> foodList = new List<Food>();
         enum Movingdirection{
             Right,
@@ -116,8 +117,13 @@ namespace WpfFoodie
                             countTillScale++;
                             score++;
                             lblScore.Content = score;
+                            if (score > highscore)
+                            {
+                                highscore = score;
+                                lblHighscore.Content = $"Highscore: {highscore}";
+                            }
                             //Change index under here to number of elements on screen + 1
-                            GameGrid.Children.RemoveAt(2);
+                            GameGrid.Children.RemoveAt(3);
                             foodList.RemoveAt(0);
                             Scaling();
                         }
@@ -129,7 +135,7 @@ namespace WpfFoodie
                     else if (foodList[0].FoodY == 403 + j)
                     {
                         //Change index under here to number of elements on screen + 1
-                        GameGrid.Children.RemoveAt(2);
+                        GameGrid.Children.RemoveAt(3);
                         foodList.RemoveAt(0);
                         ResetScore();
                     }
