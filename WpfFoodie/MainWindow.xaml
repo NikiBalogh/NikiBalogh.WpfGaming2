@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfFoodie"
         mc:Ignorable="d"
-        Title="Hungry Hungry Player" Height="450" Width="800"
+        Title="Apple Catcher" Height="450" Width="800"
         ResizeMode="CanMinimize" KeyDown="Window_KeyDown">
     <Grid x:Name="GameGrid">
         <Rectangle x:Name="recPlayer" HorizontalAlignment="Center" Height="10" Margin="0,403,0,0" Stroke="Black" VerticalAlignment="Top" Width="100" Fill="#FF7A7777"/>
