@@ -101,48 +101,29 @@ namespace WpfFoodie
                 recPlayer.Margin = new Thickness(playerX, 403, 0, 0);
             }
         }
-        //Runs a loop that checks the height of recPlayer
         //Checks if foodlist is empty;
-        //Runs a loop that checks the width of recPlayer
-        //Runs Scoring() if playerX (width) is the same as first item's foodX on foodList
-        //and if playerY (height) is the same as first item's foodY on foodList
+        //Runs Scoring() if the first item's foodX on foodList is between playerX (width of recPlayer)
+        //and if the first item's foodY on foodList is between playerY (height of recplayer)
         //If it is runs Scoring()
         //Then checks if the first item on foodList's FoodY is under 413 if it is
         //it runs RemoveFood and then ResetScore()
         //If not it does nothing
         private void CheckIfScoring()
         {
-            for (int j = -10; j < 10; j++)
+            if (foodList.Count == 0)
             {
-                if (foodList.Count == 0)
-                {
 
-                }
-                else
-                {
-
-                    for (int i = -100; i < 100; i++)
-                    {
-                        if (foodList.Count == 0)
-                        {
-                           
-                        }
-                        else if (playerX + i == foodList[0].FoodX && foodList[0].FoodY == 403 + j)
-                        {
-                            Scoring();
-                        }
-                    }
-                    if (foodList.Count == 0)
-                    {
-
-                    }
-                    else if (foodList[0].FoodY > 413)
-                    {
-                        RemoveFood();
-                        ResetScore();
-                    }
-                }
             }
+            else if (playerX + recPlayer.Width >= foodList[0].FoodX && playerX - recPlayer.Width <= foodList[0].FoodX && foodList[0].FoodY <= 403 + recPlayer.Height && foodList[0].FoodY >= 403 - recPlayer.Height)
+            {
+                Scoring();
+            }
+            else if (foodList[0].FoodY > 413)
+            {
+                RemoveFood();
+                ResetScore();
+            }
+            
         }
         //Scales if countTillScale equals WhenToScale
         //resets countTillScale
@@ -152,7 +133,8 @@ namespace WpfFoodie
             if (countTillScale == WhenToScale)
             {
                 countTillScale = 0;
-                WhenToScale += 10;
+                //Change when to value under here to increase score required for increase difficulty again
+                WhenToScale += 0;
                 DifficultyLevel++;
                 if (DifficultyLevel < 5)
                 {
